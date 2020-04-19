@@ -37,7 +37,7 @@ public class PatientData extends AppCompatActivity {
     }
 
     private void getData() {
-
+        localbtn.setVisibility(View.INVISIBLE);
         globalbtn.setVisibility(View.VISIBLE);
         Call<Dataf> call=jsonApi.getDaata();
      call.enqueue(new Callback<Dataf>() {
@@ -49,7 +49,7 @@ public class PatientData extends AppCompatActivity {
              localNew.setText("Local New Cases : "+data.data.getLocal_new_cases());
              localDeath.setText("Local Total Deaths : "+data.data.getLocal_deaths());
              localRecover.setText("Local Total Recover : "+data.data.getLocal_recovered());
-             localbtn.setVisibility(View.INVISIBLE);
+
 
          }
 
@@ -59,28 +59,24 @@ public class PatientData extends AppCompatActivity {
              localNew.setText("Failed to Load");
              localDeath.setText("Failed to Load");
              localRecover.setText("Failed to Load");
-             localbtn.setVisibility(View.INVISIBLE);
+
          }
      });
     }
 
     public void globalCase(View view) {
-
-
         localbtn.setVisibility(View.VISIBLE);
+        globalbtn.setVisibility(View.INVISIBLE);
+
         Call<Dataf> call=jsonApi.getDaata();
         call.enqueue(new Callback<Dataf>() {
             @Override
             public void onResponse(Call<Dataf> call, Response<Dataf> response) {
                 Dataf data=response.body();
-//                localTotal.setText("Global Total Cases : "+data.data.getGlobal_total_cases());
-//                localNew.setText("Global New Cases : "+data.data.getGlobal_new_cases());
-//                localDeath.setText("Global Total Deaths : "+data.data.getGlobal_deaths());
-//                localRecover.setText("Global Total Recover : "+data.data.getGlobal_recovered());
-//                globalbtn.setVisibility(View.INVISIBLE);
-                hData data1[]=data.data.getHospital_data();
-                hData.hospital h=data1[1].new hospital();
-                localTotal.setText(h.name);
+                localTotal.setText("Global Total Cases : "+data.data.getGlobal_total_cases());
+                localNew.setText("Global New Cases : "+data.data.getGlobal_new_cases());
+                localDeath.setText("Global Total Deaths : "+data.data.getGlobal_deaths());
+                localRecover.setText("Global Total Recover : "+data.data.getGlobal_recovered());
 
 
             }
@@ -91,7 +87,7 @@ public class PatientData extends AppCompatActivity {
                 localNew.setText("Failed to Load");
                 localDeath.setText("Failed to Load");
                 localRecover.setText("Failed to Load");
-                globalbtn.setVisibility(View.INVISIBLE);
+
             }
 
         });
